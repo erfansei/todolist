@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="cover">
+        <div class="container">
+            <h1>Your ToDo List</h1>
+            <input type="text" id="input-text" placeholder="Please enter a new task">
+            <button id="add-btn" >Add</button>
+            <ul id="new-task"></ul>
+        </div>
+    </div>
+    <script>
+        var addBtnElement = document.getElementById("add-btn");
+        addBtnElement.addEventListener("click" , addNewTask);
+        var inputElement = document.getElementById("input-text");
+        inputElement.addEventListener("keypress" , enterKey);
+        function enterKey(event) {
+            if(event.which === 13) {
+                addNewTask();
+            }
+        }
+        function addNewTask(){
+            if(inputElement.value.length >= 3){
+                var ulElement = document.getElementById("new-task");
+                var liElement = document.createElement("li");
+                liElement.innerHTML = inputElement.value;
+                ulElement.appendChild(liElement);
+                var btnElement = document.createElement("button");
+                liElement.appendChild(btnElement);
+                inputElement.value = "";
+                liElement.addEventListener("click",changeColor);
+                function changeColor() {
+                    liElement.classList.toggle("done");
+                }
+                btnElement.innerHTML = "Del";
+                btnElement.addEventListener("click" , deleteDelBtn)
+                function deleteDelBtn() {
+                    liElement.remove();
+                }
+            } else{
+                alert("Please enter at least 3 characters");
+            }
+        }
+    </script>
+</body>
+</html>
